@@ -32,6 +32,8 @@ export default  class App extends React.Component{
          float: 'right',
          marginLeft: '5px'
      };
+     
+     
     
      return (
          <div className="container-fluid">
