@@ -10,15 +10,13 @@ import {Well,
 export default  class App extends React.Component{
  constructor(props){
      super(props);
+  
  }
  
   goToRegister(){
          this.props.history.push("/register");
      }
- 
- 
- 
- 
+
  render(){
      
      const wellStyle={
@@ -38,12 +36,14 @@ export default  class App extends React.Component{
      return (
          <div className="container-fluid">
          <Well style={wellStyle}>
+           
          <form>
          <legend>Please Login</legend>     
          <FormGroup>
          <ControlLabel>Enter Username</ControlLabel>
          <FormControl type="text" 
-                       placeholder="Enter your username"/>
+                       placeholder="Enter your username"            
+                 />
          <FormControl.Feedback/>
          <HelpBlock></HelpBlock>
          
