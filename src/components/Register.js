@@ -19,6 +19,7 @@ import classnames from 'classnames'
      super(props);
 
      this.state={
+         food:{}
          
      };
  
@@ -29,18 +30,36 @@ import classnames from 'classnames'
          firstName:'required',
           gender:'required',
            municipality:'required',
-           comments:'required'
+           comments:'required',
+           food:'required|foodsrule'
      },
+     
      {
          "required": "The field :attribute is required!"
      },
-     (validation)=>{
-         validation.setAttributeNames({
+     (validator)=>{
+         validator.setAttributeNames({
              lastName:'Lastname',
              firstname:'Firstname',
              gender:'Gender',
              municipality:'Municipality',
              comments:'Comment'
+           
+         });
+         
+         validator.constructor.registerAsync('foodsrule',
+         function (food,attributes,req, passes){
+                var counter=0;
+                
+                for(var key in food){
+                    if (food[key])
+                    counter++;
+                }
+                
+                if(counter==0)
+                passes(false, 'Please select one food');
+                else 
+                passes();
          });
      }
  );
@@ -204,17 +223,22 @@ onValidate=(error)=>{
          </FormGroup>
           
           
-          <FormGroup>
+          <FormGroup  validationState={this.getClasses('food')}>
           <ControlLabel>Favorite Food: </ControlLabel>
           <Checkbox style={rbutton} inline
-           checked={this.state.food1 === 'Pizza'}
+           checked={this.state.food['Pizza'] === 1}
            
                        onClick={
                          ()=>{
-                           if(this.state.food1 === 'Pizza')
-                           this.setState({ 'food1':''}) 
+                             var food = this.state.food;
+                           if(food['Pizza'] === 1)
+                              food['Pizza'] =undefined; 
                            else 
-                           this.setState({ 'food1':'Pizza'}) 
+                           food['Pizza']=1;
+                           
+                           this.setState({
+                               food:food
+                           });
                         }
                        
                        }>
@@ -222,30 +246,26 @@ onValidate=(error)=>{
           </Checkbox>
           {' '}
           <Checkbox inline
-           checked={this.state.food2 === 'Burger'}
+            checked={this.state.food['Burger'] === 1}
+           
                        onClick={
                          ()=>{
-                           if(this.state.food2 === 'Burger')
-                           this.setState({'food2':'' })
-                            else 
-                           this.setState({ 'food2':'Burger'}) 
+                             var food = this.state.food;
+                           if(food['Burger'] === 1)
+                              food['Burger'] =undefined; 
+                           else 
+                           food['Burger']=1;
+                           
+                           this.setState({
+                               food:food
+                           });
                         }
+                       
                        }>
           Burger
           </Checkbox>
-          {' '}
-          <Checkbox inline
-          checked={this.state.food3 === 'Fries'}
-                       onClick={
-                         ()=>{
-                           if(this.state.food3 === 'Fries')
-                           this.setState({'food3':''})
-                           else
-                            this.setState({ 'food3':'Fries'})
-                        }
-                       }>
-           Fries
-        </Checkbox>
+       
+         <HelpBlock>{this.getErrorText('food')}</HelpBlock>
         </FormGroup>
         
         
