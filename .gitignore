@@ -2,3 +2,4 @@
 .idea
 /dist
 /dist/asset
+/server/node_modules
