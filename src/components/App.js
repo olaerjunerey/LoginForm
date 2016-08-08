@@ -107,6 +107,9 @@ onValidate=(error)=>{
   goToRegister(){
          this.props.history.push("/register");
      }
+  goToHome(){
+         this.props.history.push("/home");
+  }   
 
  render(){
      
@@ -130,7 +133,7 @@ onValidate=(error)=>{
            
          <form>
          <legend>Please Login</legend>   
-          {JSON.stringify(this.state)}
+          
             
          <FormGroup validationState={this.getClasses('email')}>
          <ControlLabel>Enter Username</ControlLabel>
@@ -166,7 +169,7 @@ onValidate=(error)=>{
           
          </FormGroup>
          <ButtonGroup style={btcontainer}>
-         <Button bsStyle="primary" type="submit">Login</Button>
+         <Button bsStyle="primary" type="button" onClick={this.goToHome.bind(this)}>Login</Button>
          <Button bsStyle="info" type="button" onClick={this.goToRegister.bind(this)}>Register</Button>
          </ButtonGroup>
          </form>
